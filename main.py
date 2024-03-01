@@ -95,7 +95,7 @@ def make_parser():
     inspect = subparsers.add_parser('inspect',
                                     description="Inspect an NEO by primary designation or by name.")
     inspect.add_argument('-v', '--verbose', action='store_true',
-                         help="Additionally, print all known close approaches of this NEO.")
+                            help="Additionally, print all known close approaches of this NEO.")
     inspect_id = inspect.add_mutually_exclusive_group(required=True)
     inspect_id.add_argument('-p', '--pdes',
                             help="The primary designation of the NEO to inspect (e.g. '433').")
@@ -104,58 +104,58 @@ def make_parser():
 
     # Add the `query` subcommand parser.
     query = subparsers.add_parser('query',
-                                  description="Query for close approaches that "
-                                              "match a collection of filters.")
+                                description="Query for close approaches that "
+                                            "match a collection of filters.")
     filters = query.add_argument_group('Filters',
-                                       description="Filter close approaches by their attributes "
-                                                   "or the attributes of their NEOs.")
+                                        description="Filter close approaches by their attributes "
+                                                    "or the attributes of their NEOs.")
     filters.add_argument('-d', '--date', type=date_fromisoformat,
-                         help="Only return close approaches on the given date, "
-                              "in YYYY-MM-DD format (e.g. 2020-12-31).")
+                        help="Only return close approaches on the given date, "
+                            "in YYYY-MM-DD format (e.g. 2020-12-31).")
     filters.add_argument('-s', '--start-date', type=date_fromisoformat,
-                         help="Only return close approaches on or after the given date, "
-                              "in YYYY-MM-DD format (e.g. 2020-12-31).")
+                        help="Only return close approaches on or after the given date, "
+                            "in YYYY-MM-DD format (e.g. 2020-12-31).")
     filters.add_argument('-e', '--end-date', type=date_fromisoformat,
-                         help="Only return close approaches on or before the given date, "
-                              "in YYYY-MM-DD format (e.g. 2020-12-31).")
+                        help="Only return close approaches on or before the given date, "
+                            "in YYYY-MM-DD format (e.g. 2020-12-31).")
     filters.add_argument('--min-distance', dest='distance_min', type=float,
-                         help="In astronomical units. Only return close approaches that "
-                              "pass as far or farther away from Earth as the given distance.")
+                        help="In astronomical units. Only return close approaches that "
+                            "pass as far or farther away from Earth as the given distance.")
     filters.add_argument('--max-distance', dest='distance_max', type=float,
-                         help="In astronomical units. Only return close approaches that "
-                              "pass as near or nearer to Earth as the given distance.")
+                        help="In astronomical units. Only return close approaches that "
+                            "pass as near or nearer to Earth as the given distance.")
     filters.add_argument('--min-velocity', dest='velocity_min', type=float,
-                         help="In kilometers per second. Only return close approaches "
-                              "whose relative velocity to Earth at approach is as fast or faster "
-                              "than the given velocity.")
+                        help="In kilometers per second. Only return close approaches "
+                            "whose relative velocity to Earth at approach is as fast or faster "
+                            "than the given velocity.")
     filters.add_argument('--max-velocity', dest='velocity_max', type=float,
-                         help="In kilometers per second. Only return close approaches "
-                              "whose relative velocity to Earth at approach is as slow or slower "
-                              "than the given velocity.")
+                        help="In kilometers per second. Only return close approaches "
+                            "whose relative velocity to Earth at approach is as slow or slower "
+                            "than the given velocity.")
     filters.add_argument('--min-diameter', dest='diameter_min', type=float,
-                         help="In kilometers. Only return close approaches of NEOs with "
-                              "diameters as large or larger than the given size.")
+                        help="In kilometers. Only return close approaches of NEOs with "
+                            "diameters as large or larger than the given size.")
     filters.add_argument('--max-diameter', dest='diameter_max', type=float,
-                         help="In kilometers. Only return close approaches of NEOs with "
-                              "diameters as small or smaller than the given size.")
+                        help="In kilometers. Only return close approaches of NEOs with "
+                            "diameters as small or smaller than the given size.")
     filters.add_argument('--hazardous', dest='hazardous', default=None, action='store_true',
-                         help="If specified, only return close approaches of NEOs that "
-                              "are potentially hazardous.")
+                        help="If specified, only return close approaches of NEOs that "
+                            "are potentially hazardous.")
     filters.add_argument('--not-hazardous', dest='hazardous', default=None, action='store_false',
-                         help="If specified, only return close approaches of NEOs that "
-                              "are not potentially hazardous.")
+                        help="If specified, only return close approaches of NEOs that "
+                            "are not potentially hazardous.")
     query.add_argument('-l', '--limit', type=int,
-                       help="The maximum number of matches to return. "
-                            "Defaults to 10 if no --outfile is given.")
+                        help="The maximum number of matches to return. "
+                        "Defaults to 10 if no --outfile is given.")
     query.add_argument('-o', '--outfile', type=pathlib.Path,
-                       help="File in which to save structured results. "
-                            "If omitted, results are printed to standard output.")
+                        help="File in which to save structured results. "
+                        "If omitted, results are printed to standard output.")
 
     repl = subparsers.add_parser('interactive',
-                                 description="Start an interactive command session "
-                                             "to repeatedly run `interact` and `query` commands.")
+                                description="Start an interactive command session "
+                                            "to repeatedly run `interact` and `query` commands.")
     repl.add_argument('-a', '--aggressive', action='store_true',
-                      help="If specified, kill the session whenever a project file is modified.")
+                    help="If specified, kill the session whenever a project file is modified.")
     return parser, inspect, query
 
 
@@ -247,7 +247,7 @@ class NEOShell(cmd.Cmd):
     slow) once.
     """
     intro = ("Explore close approaches of near-Earth objects. "
-             "Type `help` or `?` to list commands and `exit` to exit.\n")
+            "Type `help` or `?` to list commands and `exit` to exit.\n")
     prompt = '(neo) '
 
     def __init__(self, database, inspect_parser, query_parser, aggressive=False, **kwargs):
@@ -365,11 +365,11 @@ class NEOShell(cmd.Cmd):
         changed = [f for f in PROJECT_ROOT.glob('*.py') if f.stat().st_mtime > _START]
         if changed:
             print("The following file(s) have been modified since this interactive session began: "
-                  f"{', '.join(str(f.relative_to(PROJECT_ROOT)) for f in changed)}.",
-                  file=sys.stderr)
+                f"{', '.join(str(f.relative_to(PROJECT_ROOT)) for f in changed)}.",
+                file=sys.stderr)
             if not self.aggressive:
                 print("To include these changes, please exit and restart this interactive session.",
-                      file=sys.stderr)
+                    file=sys.stderr)
             else:
                 print("Preemptively terminating the session aggressively.", file=sys.stderr)
                 return 'exit'

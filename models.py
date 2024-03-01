@@ -41,7 +41,9 @@ class NearEarthObject:
         """
         self.designation = info.get('designation')
         self.name = info.get('name')
-        self.diameter = info.get('diameter', float('nan'))
+        self.diameter = info.get('diameter')
+        if not self.diameter:
+            self.diameter = float('nan')
         self.hazardous = info.get('hazardous', False)
 
         # Create an empty initial collection of linked approaches.

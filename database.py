@@ -42,11 +42,25 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        # TODO: What additional auxiliary data structures will be useful?
+        # Get dict of pdes and neo indices
+        self._pdes_to_index = {neo.designation: index for index, neo in 
+                                enumerate(self._neos)}
 
-        # TODO: Link together the NEOs and their close approaches.
+        
+        # Link together the NEOs and their close approaches.
+        for approach in self._approaches:
 
-    def get_neo_by_designation(self, designation):
+                neo = self.get_neo_by_designation(approach.designation) 
+                
+                if neo:
+                    # Link approach to neo
+                    approach.neo = neo
+                    
+                    # Append approach to neo's list of approaches
+                    neo.approaches.append(approach)
+            
+
+    def get_neo_by_designation(self, pdes):
         """Find and return an NEO by its primary designation.
 
         If no match is found, return `None` instead.
@@ -59,7 +73,10 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
+        
+        if pdes in self._pdes_to_index.keys():
+            return self._neos[self._pdes_to_index[pdes]]
+        
         return None
 
     def get_neo_by_name(self, name):

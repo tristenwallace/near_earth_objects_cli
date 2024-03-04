@@ -46,6 +46,7 @@ class NEODatabase:
         self._pdes_to_index = {neo.designation: index for index, neo in 
                                 enumerate(self._neos)}
 
+        self._name_to_neo = {neo.name: neo for neo in self._neos}
         
         # Link together the NEOs and their close approaches.
         for approach in self._approaches:
@@ -93,7 +94,9 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
+        if name.capitalize() in self._name_to_neo.keys():
+            return self._name_to_neo[name.capitalize()]
+        
         return None
 
     def query(self, filters=()):
@@ -110,6 +113,6 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
+        # Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
             yield approach

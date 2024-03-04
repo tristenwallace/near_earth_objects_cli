@@ -94,10 +94,7 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        if name.capitalize() in self._name_to_neo.keys():
-            return self._name_to_neo[name.capitalize()]
-        
-        return None
+        return self.name_to_neo.get(name.capitalize(), None)
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of filters.

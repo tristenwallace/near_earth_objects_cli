@@ -53,7 +53,7 @@ def load_approaches(cad_json_path):
     """
     with open(cad_json_path) as infile:
         file = json.load(infile)
-        closeApproaches = []
+        Approaches = []
         for item in file['data']:
             try:
                 approach = CloseApproach(
@@ -65,5 +65,5 @@ def load_approaches(cad_json_path):
             except Exception as e:
                 print(e)
             else:
-                closeApproaches.append(approach)
-    return closeApproaches
+                Approaches.append(approach)
+    return Approaches

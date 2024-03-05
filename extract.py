@@ -29,7 +29,9 @@ def load_neos(neo_csv_path):
         neos = []
         for line in reader:
             designation = line['pdes']
-            name = line.get('name')
+            name = line['name']
+            if not name or name == '':
+                name = None
             diameter = float(line["diameter"]) if line["diameter"] else None
             hazardous = False if line["pha"] in ["", "N"] else True
             
